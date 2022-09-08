@@ -31,10 +31,8 @@ public class WordService{
     public void delete(Word word) {
         wordRepository.delete(word);
     }
-/*
-    @Query("")
-    public Set<Word> findbyRegex(String match, Language language) { }
 
-    */
+    public Set<Word> getAllByLanguage(Long languageId) {
+        return wordRepository.getAllByLanguage(languageId);}
 
 }

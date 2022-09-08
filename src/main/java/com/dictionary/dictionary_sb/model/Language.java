@@ -6,10 +6,10 @@ import javax.persistence.*;
 @Entity
 public class Language {
 
-    @Column(name="eId", nullable = false)
+    @Column(name="languageId", nullable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long eId;
+    private Long languageId;
 
     @Column(name="languageName", nullable = false)
     private String languageName;
@@ -19,8 +19,10 @@ public class Language {
     @Column(name="motherLanguage", nullable = false)
     private String motherLanguage;
 
+    private static Long selectedLanguageId;
+
     public Long getId() {
-        return eId;
+        return languageId;
     }
 
 
@@ -48,5 +50,10 @@ public class Language {
         this.languageName = languageName;
     }
 
-
+    public Long getSelectedLanguageId() {
+        return selectedLanguageId;
+    }
+    public void setSelectedLanguageId(Long selectedLanguageId) {
+        this.selectedLanguageId = selectedLanguageId;
+    }
 }

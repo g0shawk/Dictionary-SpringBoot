@@ -20,7 +20,7 @@ public class Word {
 */
 
     @OneToOne
-    @JoinColumn(name="eId")
+    @JoinColumn(name="languageId")
     private Language language;
 
     @Column(name="expression", nullable = false)

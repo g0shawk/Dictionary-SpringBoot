@@ -42,7 +42,7 @@ public class Bootstrap implements CommandLineRunner {
         word2.setTranslation("posao");
         word2.setLanguage(language2);
 
-        // Najprije se mora snimiti language a tek onda riječ
+        // Najprije se mora snimiti language a tek onda word zbog referencijalnog integriteta
 
         languageRepository.save(language1);
         languageRepository.save(language2);
