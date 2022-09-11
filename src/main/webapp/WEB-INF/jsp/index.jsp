@@ -10,6 +10,13 @@
 <html>
 <head>
     <title>Index</title>
+
+    <%!
+        public void showSelectedLanguage(int i){
+
+        }
+
+    %>
 </head>
 <body>
 <h1>
@@ -17,14 +24,15 @@
 </h1>
 <div align="left">
     <h2>Dictionary v1.0 - Spring</h2>
-    <form action="list" method="post">
+    <form action="/list" method="post">
         Select a Language:&nbsp;
         <select name="language">
-            <option value="">Language</option>
+            <option value="">Choose Language</option>
             <c:forEach items="${languages}" var="language">
                 <option value="${language.languageName}">${language.languageName}</option>
             </c:forEach>
         </select>
+        <% request.getParameter("language") ;%>
         &nbsp;&nbsp;&nbsp;
         <input type="submit" value="Submit"/>
     </form>
@@ -34,7 +42,8 @@
             <tr>
                 <td width="8%">Selected Language:</td>
                 <td width="52%">
-                    <input type="text" name="name"/>
+                    <input type="text" name="selectedLanguage"  value="${param.dropdownName}" readonly/>
+
                 </td>
             </tr>
         </table>
@@ -144,6 +153,8 @@
     <form action="/TBD" method="post">
         <button type="button">Save to .txt</button>
     </form>
+
+
 
 </div>
 </body>

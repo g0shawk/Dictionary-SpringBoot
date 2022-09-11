@@ -25,6 +25,13 @@ public class Language {
         return languageId;
     }
 
+    public Long getLanguageId() {
+        return languageId;
+    }
+
+    public void setLanguageId(Long languageId) {
+        this.languageId = languageId;
+    }
 
     public String getForeignLanguage() {
         return foreignLanguage;
@@ -50,10 +57,10 @@ public class Language {
         this.languageName = languageName;
     }
 
-    public Long getSelectedLanguageId() {
+    public  Long getSelectedLanguageId() {
         return selectedLanguageId;
     }
-    public void setSelectedLanguageId(Long selectedLanguageId) {
-        this.selectedLanguageId = selectedLanguageId;
+    public  void setSelectedLanguageId(Long selectedLanguageId) {
+        selectedLanguageId = selectedLanguageId;
     }
 }

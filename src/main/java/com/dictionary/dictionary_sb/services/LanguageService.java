@@ -1,9 +1,12 @@
 package com.dictionary.dictionary_sb.services;
 
+import com.dictionary.dictionary_sb.commands.LanguageCommand;
+import com.dictionary.dictionary_sb.converters.LanguageCommandToLanguage;
+import com.dictionary.dictionary_sb.converters.LanguageToLanguageCommand;
 import com.dictionary.dictionary_sb.model.Language;
 import com.dictionary.dictionary_sb.repositories.LanguageRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,17 +16,29 @@ public class LanguageService {
 
     private final LanguageRepository languageRepository;
 
-    @Autowired
-    public LanguageService(LanguageRepository languageRepository) {
-        this.languageRepository = languageRepository;
-    }
+    private final LanguageCommandToLanguage languageCommandToLanguage;
 
+    private  final LanguageToLanguageCommand languageToLanguageCommand;
+
+    public LanguageService(LanguageRepository languageRepository, LanguageCommandToLanguage languageCommandToLanguage, LanguageToLanguageCommand languageToLanguageCommand) {
+        this.languageRepository = languageRepository;
+        this.languageCommandToLanguage = languageCommandToLanguage;
+        this.languageToLanguageCommand = languageToLanguageCommand;
+    }
 
     public Set<Language> getLanguages() {
         Set<Language> languageSet = new HashSet<>();
         languageRepository.findAll().iterator().forEachRemaining(languageSet::add);
         return languageSet;
+    }
 
+    @Transactional
+    public LanguageCommand saveLanguageCommand(LanguageCommand command){
 
+        Language detachedLanguage = languageCommandToLanguage.convert(command);
+
+        Language savedLanguage = languageRepository.save(detachedLanguage);
+
+        return languageToLanguageCommand.convert(savedLanguage);
     }
 }

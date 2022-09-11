@@ -1,9 +1,9 @@
 package com.dictionary.dictionary_sb.repositories;
 
 import com.dictionary.dictionary_sb.model.Language;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 
 
-public interface LanguageRepository extends CrudRepository<Language, Long> {
+public interface LanguageRepository extends JpaRepository<Language, Long> {
 }

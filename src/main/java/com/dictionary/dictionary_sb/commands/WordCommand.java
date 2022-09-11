@@ -1,26 +1,19 @@
-package com.dictionary.dictionary_sb.model;
+package com.dictionary.dictionary_sb.commands;
 
+import com.dictionary.dictionary_sb.model.Language;
 import com.sun.istack.NotNull;
 
-import javax.persistence.*;
+public class WordCommand {
 
-@Table(name="Word")
-@Entity
-public class Word {
-
-    @Column(name="id", nullable = false)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name="languageId")
+    @NotNull
     private Language language;
 
-    @Column(name="expression", nullable = false)
+    @NotNull
     private  String expression;
 
-    @Column(name="translation")
     @NotNull
     private  String translation;
 
@@ -30,6 +23,14 @@ public class Word {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
     }
 
     public String getExpression() {
@@ -46,13 +47,5 @@ public class Word {
 
     public void setTranslation(String translation) {
         this.translation = translation;
-    }
-
-    public Language getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(Language language) {
-        this.language = language;
     }
 }
