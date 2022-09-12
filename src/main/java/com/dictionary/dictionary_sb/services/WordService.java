@@ -21,10 +21,10 @@ public class WordService{
 
     private final WordCommandToWord wordCommandToWord;
 
-    public WordService(WordRepository wordRepository, WordToWordCommand wordToWordCommand, WordCommandToWord wordCommandToWord) {
+    public WordService(WordRepository wordRepository, WordCommandToWord wordCommandToWord,WordToWordCommand wordToWordCommand) {
         this.wordRepository = wordRepository;
-        this.wordToWordCommand = wordToWordCommand;
         this.wordCommandToWord = wordCommandToWord;
+        this.wordToWordCommand = wordToWordCommand;
     }
 
 
@@ -51,7 +51,7 @@ public class WordService{
         Word detachedWord = wordCommandToWord.convert(command);
 
         Word savedWord = wordRepository.save(detachedWord);
-
+        System.out.println("Inside: saveLanguageCommand(WordCommand command)");
         return wordToWordCommand.convert(savedWord);
     }
 

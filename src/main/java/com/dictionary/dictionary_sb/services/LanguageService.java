@@ -38,7 +38,7 @@ public class LanguageService {
         Language detachedLanguage = languageCommandToLanguage.convert(command);
 
         Language savedLanguage = languageRepository.save(detachedLanguage);
-
+        System.out.println("Inside: saveLanguageCommand(LanguageCommand command)");
         return languageToLanguageCommand.convert(savedLanguage);
     }
 }

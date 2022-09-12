@@ -15,6 +15,9 @@ public class LanguageCommandToLanguage implements Converter<LanguageCommand, Lan
     @Override
     public Language convert(LanguageCommand source) {
 
+        if(source == null)
+            return  null;
+
         final Language language = new Language();
         language.setLanguageId(source.getLanguageId());
         language.setLanguageName(source.getLanguageName());

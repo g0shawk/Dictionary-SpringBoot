@@ -15,6 +15,9 @@ public class WordCommandToWord implements Converter<WordCommand, Word> {
     @Override
     public Word convert(WordCommand source) {
 
+        if (source == null)
+            return null;
+
         final Word word = new Word();
         word.setId(source.getId());
         word.setExpression(source.getExpression());
