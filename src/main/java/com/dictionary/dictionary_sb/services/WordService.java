@@ -1,13 +1,14 @@
 package com.dictionary.dictionary_sb.services;
 
+import com.dictionary.dictionary_sb.commands.LanguageCommand;
 import com.dictionary.dictionary_sb.commands.WordCommand;
+import com.dictionary.dictionary_sb.converters.LanguageCommandToLanguage;
+import com.dictionary.dictionary_sb.converters.LanguageToLanguageCommand;
 import com.dictionary.dictionary_sb.converters.WordCommandToWord;
 import com.dictionary.dictionary_sb.converters.WordToWordCommand;
-import com.dictionary.dictionary_sb.model.Language;
 import com.dictionary.dictionary_sb.model.Word;
 import com.dictionary.dictionary_sb.repositories.WordRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,12 +22,17 @@ public class WordService{
 
     private final WordCommandToWord wordCommandToWord;
 
-    public WordService(WordRepository wordRepository, WordCommandToWord wordCommandToWord,WordToWordCommand wordToWordCommand) {
-        this.wordRepository = wordRepository;
-        this.wordCommandToWord = wordCommandToWord;
-        this.wordToWordCommand = wordToWordCommand;
-    }
+    private  final LanguageToLanguageCommand languageToLanguageCommand;
 
+    private  final LanguageCommandToLanguage languageCommandToLanguage;
+
+    public WordService(WordRepository wordRepository, WordToWordCommand wordToWordCommand, WordCommandToWord wordCommandToWord, LanguageToLanguageCommand languageToLanguageCommand, LanguageCommandToLanguage languageCommandToLanguage) {
+        this.wordRepository = wordRepository;
+        this.wordToWordCommand = wordToWordCommand;
+        this.wordCommandToWord = wordCommandToWord;
+        this.languageToLanguageCommand = languageToLanguageCommand;
+        this.languageCommandToLanguage = languageCommandToLanguage;
+    }
 
     public Set<Word> getWords() {
         Set<Word> wordSet = new HashSet<>();
@@ -42,11 +48,22 @@ public class WordService{
         wordRepository.delete(word);
     }
 
-    public Set<Word> getWordsByLanguage(Language language) {
-        return wordRepository.getWordsByLanguage(language);}
+    public Set<WordCommand> getWordsByLanguage(LanguageCommand languageCommand) {
+        Set<Word> words = wordRepository.getWordsByLanguage(languageCommandToLanguage.convert(languageCommand));
 
+        Set<WordCommand> wordCommands = new HashSet<>();
+
+        words.stream().forEach(
+                word -> {
+                    wordCommands.add(wordToWordCommand.convert(word));
+                }
+        );
+        return wordCommands;
+    }
+/*
     @Transactional
-    public WordCommand saveLanguageCommand(WordCommand command){
+    public WordCommand saveLanguageCommand(WordCommand
+     command){
 
         Word detachedWord = wordCommandToWord.convert(command);
 
@@ -54,5 +71,5 @@ public class WordService{
         System.out.println("Inside: saveLanguageCommand(WordCommand command)");
         return wordToWordCommand.convert(savedWord);
     }
-
+*/
 }

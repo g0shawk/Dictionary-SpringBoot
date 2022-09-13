@@ -10,13 +10,6 @@
 <html>
 <head>
     <title>Index</title>
-
-    <%!
-        public void showSelectedLanguage(int i){
-
-        }
-
-    %>
 </head>
 <body>
 <h1>
@@ -24,7 +17,7 @@
 </h1>
 <div align="left">
     <h2>Dictionary v1.0 - Spring</h2>
-    <form action="/list" method="post">
+    <form action="/list" method="get">
         Select a Language:&nbsp;
         <select name="language">
             <option value="">Choose Language</option>
@@ -34,8 +27,10 @@
         </select>
         <% request.getParameter("language") ;%>
         &nbsp;&nbsp;&nbsp;
-        <input type="submit" value="Submit"/>
+        <input type="submit" value="Submit" name="submit"/>
     </form>
+
+    <form action="changeLanguage" method="post" modelAttribure="language"></form>
 
     <form>
         <table width="75%">
@@ -52,7 +47,7 @@
     <form>
         <table width="75%">
             <tr>
-                <td width="8%">Selected Language Code:</td>
+                <td width="8%">Language Code:</td>
                 <td width="52%">
                     <input type="text" name="name"/>
                 </td>

@@ -1,5 +1,6 @@
 package com.dictionary.dictionary_sb.services;
 
+import com.dictionary.dictionary_sb.commands.LanguageCommand;
 import com.dictionary.dictionary_sb.converters.LanguageCommandToLanguage;
 import com.dictionary.dictionary_sb.converters.LanguageToLanguageCommand;
 import com.dictionary.dictionary_sb.model.Language;
@@ -46,9 +47,9 @@ class LanguageServiceTest {
 
         //when(languageService.getLanguages()).thenReturn(languagesData);
 
-        doReturn(languagesData).when(languageService).getLanguages();
+        doReturn(languagesData).when(languageService).getLanguageCommands();
 
-        Set<Language> languages = languageService.getLanguages();
+        Set<LanguageCommand> languages = languageService.getLanguageCommands();
 
         assertEquals(1, languages.size());
         verify(languageRepository, times(1)).findAll();

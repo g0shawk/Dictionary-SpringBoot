@@ -20,17 +20,24 @@ public class LanguageService {
 
     private  final LanguageToLanguageCommand languageToLanguageCommand;
 
-    public LanguageService(LanguageRepository languageRepository, LanguageCommandToLanguage languageCommandToLanguage, LanguageToLanguageCommand languageToLanguageCommand) {
+    public LanguageService(LanguageRepository languageRepository, LanguageCommandToLanguage languageCommandToLanguage,
+                           LanguageToLanguageCommand languageToLanguageCommand) {
         this.languageRepository = languageRepository;
         this.languageCommandToLanguage = languageCommandToLanguage;
         this.languageToLanguageCommand = languageToLanguageCommand;
     }
 
-    public Set<Language> getLanguages() {
-        Set<Language> languageSet = new HashSet<>();
-        languageRepository.findAll().iterator().forEachRemaining(languageSet::add);
-        return languageSet;
+    public Set<LanguageCommand> getLanguageCommands() {
+        //languageRepository.findAll().iterator().forEachRemaining(languageSet::add);
+        Set<LanguageCommand> languageCommands = new HashSet<>();
+        languageRepository.findAll().forEach(
+                language -> {languageCommands.add(languageToLanguageCommand.convert(language));
+                });
+
+        return languageCommands;
     }
+
+
 
     @Transactional
     public LanguageCommand saveLanguageCommand(LanguageCommand command){

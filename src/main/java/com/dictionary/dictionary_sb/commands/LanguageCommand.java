@@ -15,9 +15,6 @@ public class LanguageCommand {
     @NotNull
     private String motherLanguage;
 
-    @NotNull
-    private static Long selectedLanguageId;
-
     public Long getLanguageId() {
         return languageId;
     }
@@ -50,11 +47,5 @@ public class LanguageCommand {
         this.motherLanguage = motherLanguage;
     }
 
-    public  Long getSelectedLanguageId() {
-        return selectedLanguageId;
-    }
 
-    public  void setSelectedLanguageId(Long selectedLanguageId) {
-        LanguageCommand.selectedLanguageId = selectedLanguageId;
-    }
 }

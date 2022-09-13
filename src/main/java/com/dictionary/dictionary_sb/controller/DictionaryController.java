@@ -1,6 +1,6 @@
 package com.dictionary.dictionary_sb.controller;
 
-import com.dictionary.dictionary_sb.model.Language;
+import com.dictionary.dictionary_sb.commands.LanguageCommand;
 import com.dictionary.dictionary_sb.services.LanguageService;
 import com.dictionary.dictionary_sb.services.WordService;
 import org.springframework.stereotype.Controller;
@@ -29,9 +29,10 @@ public class DictionaryController {
     @GetMapping({ "/{languageName}"})
     public String getDictionaryById(@PathVariable String languageName, Model model){
 
-        Set<Language> languages = languageService.getLanguages();
+        Set<LanguageCommand> languageCommands = languageService.getLanguageCommands();
 
-        Optional<Language> matchingObject = languages.stream().filter(language -> language.getLanguageName()
+        Optional<LanguageCommand> matchingObject = languageCommands.stream().filter(
+                languageCommand -> languageCommand.getLanguageName()
                 .equals(languageName)).findFirst();
 
         model.addAttribute("words", wordService.getWordsByLanguage(matchingObject.get()));
