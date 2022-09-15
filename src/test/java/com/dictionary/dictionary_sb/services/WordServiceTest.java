@@ -1,7 +1,11 @@
 package com.dictionary.dictionary_sb.services;
 
+import com.dictionary.dictionary_sb.commands.WordCommand;
+import com.dictionary.dictionary_sb.converters.LanguageCommandToLanguage;
+import com.dictionary.dictionary_sb.converters.LanguageToLanguageCommand;
 import com.dictionary.dictionary_sb.converters.WordCommandToWord;
 import com.dictionary.dictionary_sb.converters.WordToWordCommand;
+import com.dictionary.dictionary_sb.model.Language;
 import com.dictionary.dictionary_sb.model.Word;
 import com.dictionary.dictionary_sb.repositories.WordRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,26 +19,42 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+
 class WordServiceTest {
     WordService wordService;
 
     @Mock
-    WordRepository wordRepository;
+    private  WordRepository wordRepository;
+    @Mock
+    private  WordToWordCommand wordToWordCommand;
 
     @Mock
-    WordCommandToWord wordCommandToWord;
+    private  WordCommandToWord wordCommandToWord;
 
     @Mock
-    WordToWordCommand wordToWordCommand;
+    private   LanguageToLanguageCommand languageToLanguageCommand;
+
+    @Mock
+    private   LanguageCommandToLanguage languageCommandToLanguage;
+
+    @Mock
+    LanguageService languageService;
+
+
 
     @BeforeEach
     public void setUp() throws Exception {
         // MockitoAnnotations.initMocks(this);
         MockitoAnnotations.openMocks(this);
 
-        wordService = new WordService(wordRepository, wordCommandToWord, wordToWordCommand);
+        //wordService = new WordService(wordRepository, wordCommandToWord, wordToWordCommand);
+
+        wordService = new WordService(wordRepository, wordToWordCommand,
+                wordCommandToWord, languageToLanguageCommand, languageCommandToLanguage);
     }
 
+
+    //Does not work
     @Test
     public void getLanguagesTest() throws Exception {
 
@@ -42,17 +62,22 @@ class WordServiceTest {
         Set<Word> wordsData = new HashSet();
         wordsData.add(word);
 
-        //when(languageService.getLanguages()).thenReturn(languagesData);
+        Language language = new Language();
 
-        doReturn(wordsData).when(wordService).getWords();
+        Set<WordCommand> wordCommands = new HashSet<>();
+        wordsData.stream().forEach(
+                word1 -> wordCommands.add(wordToWordCommand.convert(word1)));
 
-        Set<Word> languages = wordService.getWords();
+        when(wordService.getWordsByLanguage(languageToLanguageCommand.convert(language))).thenReturn(wordCommands);
 
-        assertEquals(1, languages.size());
+        //doReturn(wordsData).when(wordService).getWordsByLanguage(languageToLanguageCommand.convert(language));
+
+        Set<WordCommand> words = wordService.getWordsByLanguage(languageToLanguageCommand.convert(language));
+
+        assertEquals(1, words.size());
         verify(wordRepository, times(1)).findAll();
-        //verify(wordRepository, never()).findById(anyLong());
-
-
+        verify(wordRepository, never()).findById(anyLong());
     }
+
 
 }

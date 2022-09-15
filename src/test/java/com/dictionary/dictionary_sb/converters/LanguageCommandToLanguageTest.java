@@ -38,7 +38,7 @@ class LanguageCommandToLanguageTest {
         Language language = converter.convert(languageCommand);
 
         //then
-        assertEquals(ID_VALUE, language.getId());
+        assertEquals(ID_VALUE, language.getLanguageId());
 
     }
 

@@ -8,10 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
@@ -29,14 +26,36 @@ public class IndexController {
         this.languageService = languageService;
     }
 
+    @GetMapping
+    public String getDictionaryById(@RequestParam String languageName, Model model) {
+
+        LanguageCommand languageCommand = languageService.findLanguageByLanguageName(languageName);
+        System.out.println("$$$$$$$$$$$$$$$$$ languageName = " + languageName);
+        model.addAttribute("selectedLanguage", languageService.findLanguageByLanguageName(languageName));
+        LanguageTransporter.setSelectedLanguage(languageCommand);
+
+        return "index";
+    }
+
+
+    @ModelAttribute
+    public void initSelectedLang(Model model){
+        System.out.println("################################# inside initSelectedLang");
+        LanguageCommand languageCommand;
+        if(LanguageTransporter.isLanguageAvailable())
+            languageCommand = LanguageTransporter.getSelectedLanguage();
+        else languageCommand = null;
+        model.addAttribute("selectedLanguage", languageCommand);
+    }
+
     @GetMapping({"", "/", "/index"})
     public String getLanguages(Model model) {
-        Set<LanguageCommand> languagCommands =  languageService.getLanguageCommands();
+        Set<LanguageCommand> languageCommands =  languageService.getLanguageCommands();
         model.addAttribute("languages", languageService.getLanguageCommands());
         return "index";
     }
 
-/*
+    /*
     @PostMapping({"/index"})
     public String changeLanguage(Model model){
         model.addAttribute("selectedLanguage", languageService.getLanguages());
@@ -58,4 +77,21 @@ public class IndexController {
         //modelMap.addAttribute("changeLanguage", )
         return "index";
     }
+
+    /*
+    @PostMapping
+    public String getDictionaryById(@RequestParam String languageName, Model model){
+
+        System.out.println("$$$$ languageName = " + languageName);
+        Set<LanguageCommand> languageCommands = languageService.getLanguageCommands();
+
+        Optional<LanguageCommand> matchingObject = languageCommands.stream().filter(
+                languageCommand -> languageCommand.getLanguageName()
+                .equals(languageName)).findFirst();
+
+        model.addAttribute("words", wordService.getWordsByLanguage(matchingObject.get()));
+        return "dictionary";
+    }
+    */
+
 }

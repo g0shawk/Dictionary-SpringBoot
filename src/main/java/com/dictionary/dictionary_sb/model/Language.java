@@ -21,10 +21,6 @@ public class Language {
 
     private static Long selectedLanguageId;
 
-    public Long getId() {
-        return languageId;
-    }
-
     public Long getLanguageId() {
         return languageId;
     }

@@ -13,13 +13,13 @@
 </head>
 <body>
 <h1>
-    <title>Dictionary v1.0 - Spring</title>
+    <title>Dictionary v1.0 - Spring Boot</title>
 </h1>
 <div align="left">
-    <h2>Dictionary v1.0 - Spring</h2>
-    <form action="/list" method="get">
+    <h2>Dictionary v1.0 - Spring Boot</h2>
+    <form action="/dictionary" method="get">
         Select a Language:&nbsp;
-        <select name="language">
+        <select name="languageName">
             <option value="">Choose Language</option>
             <c:forEach items="${languages}" var="language">
                 <option value="${language.languageName}">${language.languageName}</option>
@@ -27,17 +27,17 @@
         </select>
         <% request.getParameter("language") ;%>
         &nbsp;&nbsp;&nbsp;
-        <input type="submit" value="Submit" name="submit"/>
+        <input type="submit" value="Submit" />
     </form>
 
-    <form action="changeLanguage" method="post" modelAttribure="language"></form>
+    <form action="changeLanguage" method="post" modelAttribute="language"></form>
 
     <form>
         <table width="75%">
             <tr>
                 <td width="8%">Selected Language:</td>
                 <td width="52%">
-                    <input type="text" name="selectedLanguage"  value="${param.dropdownName}" readonly/>
+                    <input type="text" name="selectedLanguage"  value="${selectedLanguage.languageName}" readonly/>
 
                 </td>
             </tr>
@@ -49,7 +49,7 @@
             <tr>
                 <td width="8%">Language Code:</td>
                 <td width="52%">
-                    <input type="text" name="name"/>
+                    <input type="text" name="name" value="${selectedLanguage.languageId}" />
                 </td>
             </tr>
         </table>
@@ -61,7 +61,7 @@
             <tr>
                 <td width="8%">Mother Language Code:</td>
                 <td width="52%">
-                    <input type="text" name="name"/>
+                    <input type="text" name="name" value="${selectedLanguage.motherLanguage}" />
                 </td>
             </tr>
         </table>

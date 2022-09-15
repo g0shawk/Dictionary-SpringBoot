@@ -26,7 +26,9 @@ public class WordService{
 
     private  final LanguageCommandToLanguage languageCommandToLanguage;
 
-    public WordService(WordRepository wordRepository, WordToWordCommand wordToWordCommand, WordCommandToWord wordCommandToWord, LanguageToLanguageCommand languageToLanguageCommand, LanguageCommandToLanguage languageCommandToLanguage) {
+    public WordService(WordRepository wordRepository, WordToWordCommand wordToWordCommand,
+                       WordCommandToWord wordCommandToWord, LanguageToLanguageCommand languageToLanguageCommand,
+                       LanguageCommandToLanguage languageCommandToLanguage) {
         this.wordRepository = wordRepository;
         this.wordToWordCommand = wordToWordCommand;
         this.wordCommandToWord = wordCommandToWord;
@@ -34,18 +36,31 @@ public class WordService{
         this.languageCommandToLanguage = languageCommandToLanguage;
     }
 
+    /*
     public Set<Word> getWords() {
         Set<Word> wordSet = new HashSet<>();
         wordRepository.findAll().iterator().forEachRemaining(wordSet::add);
         return wordSet;
+    }*/
+
+    public WordCommand findById(Long long1) { Word word = wordRepository.findById(long1).orElse(null);
+        return wordToWordCommand.convert(word);}
+
+    public WordCommand save(WordCommand wordCommand) {
+        Word word = wordRepository.save(wordCommandToWord.convert(wordCommand));
+        return  wordToWordCommand.convert(word);}
+
+    public void delete(Long aLong) {
+        wordRepository.deleteById(aLong);
     }
 
-    public Word findById(Long long1) { return wordRepository.findById(long1).orElse(null);}
+    public WordCommand editExpression(WordCommand wordCommand){
+        Long id = wordCommand.getId();
+        if(wordRepository.editExpession(wordCommand.getExpression(), wordCommand.getTranslation(),
+                wordCommand.getId()))
+            return wordCommand;
+        else return null;
 
-    public Word save(Word word) { return wordRepository.save(word); }
-
-    public void delete(Word word) {
-        wordRepository.delete(word);
     }
 
     public Set<WordCommand> getWordsByLanguage(LanguageCommand languageCommand) {
@@ -60,6 +75,18 @@ public class WordService{
         );
         return wordCommands;
     }
+
+    public void deleteByLanguage(LanguageCommand languageCommand){
+        Long aLong = languageCommand.getLanguageId();
+        Set<Long> longs = new HashSet<>();
+
+        wordRepository.getWordsByLanguage(languageCommandToLanguage.convert(languageCommand)).stream()
+                        .forEach(word -> longs.add(word.getId()));
+
+        wordRepository.deleteAllById(longs);
+    }
+
+
 /*
     @Transactional
     public WordCommand saveLanguageCommand(WordCommand
@@ -72,4 +99,5 @@ public class WordService{
         return wordToWordCommand.convert(savedWord);
     }
 */
+
 }

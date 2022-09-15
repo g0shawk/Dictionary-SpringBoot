@@ -37,6 +37,21 @@ public class DictionaryController {
 
         model.addAttribute("words", wordService.getWordsByLanguage(matchingObject.get()));
         return "dictionary";
+
     }
+
+
+    /*
+    @GetMapping
+    public String getDictionaryById(@RequestParam String languageName, Model model) {
+
+        LanguageCommand languageCommand = languageService.findLanguageByLanguageName(languageName);
+        System.out.println("$$$$$$$$$$$$$$$$$ languageName = " + languageName);
+        model.addAttribute("selectedLanguage", languageService.findLanguageByLanguageName(languageName));
+        LanguageTransporter.setSelectedLanguage(languageCommand);
+
+        return "index";*/
+
+
 
 }
