@@ -22,7 +22,7 @@ public class LanguageToLanguageCommand implements Converter<Language, LanguageCo
         languageCommand.setLanguageId(source.getLanguageId());
         languageCommand.setLanguageName(source.getLanguageName());
         languageCommand.setForeignLanguage(source.getForeignLanguage());
-        languageCommand.setForeignLanguage(source.getMotherLanguage());
+        languageCommand.setMotherLanguage(source.getMotherLanguage());
 
         return languageCommand;
     }

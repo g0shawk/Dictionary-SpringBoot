@@ -1,16 +1,14 @@
 package com.dictionary.dictionary_sb.controller;
 
-import com.dictionary.dictionary_sb.commands.LanguageCommand;
 import com.dictionary.dictionary_sb.services.LanguageService;
 import com.dictionary.dictionary_sb.services.WordService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Optional;
-import java.util.Set;
+import static com.dictionary.dictionary_sb.logic.LanguageTransporter.getSelectedLanguage;
+import static com.dictionary.dictionary_sb.logic.LanguageTransporter.isLanguageAvailable;
 
 @RequestMapping("/dictionary")
 @Controller
@@ -25,9 +23,12 @@ public class DictionaryController {
         this.languageService = languageService;
     }
 
-
+/*
     @GetMapping({ "/{languageName}"})
     public String getDictionaryById(@PathVariable String languageName, Model model){
+
+        if(isLanguageAvailable())
+            languageName = getSelectedLanguage().getLanguageName();
 
         Set<LanguageCommand> languageCommands = languageService.getLanguageCommands();
 
@@ -38,7 +39,22 @@ public class DictionaryController {
         model.addAttribute("words", wordService.getWordsByLanguage(matchingObject.get()));
         return "dictionary";
 
+    }*/
+
+    @GetMapping({ "/{languageName}"})
+    public String getDictionaryById( String languageName, Model model){
+
+        if(isLanguageAvailable()){
+            languageName = getSelectedLanguage().getLanguageName();
+
+            model.addAttribute("words", wordService.getWordsByLanguage(getSelectedLanguage()));
+            return "dictionary";
+        }
+        else return "errors/no_language";
+
     }
+
+
 
 
     /*

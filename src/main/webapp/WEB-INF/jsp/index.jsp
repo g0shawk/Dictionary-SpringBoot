@@ -17,7 +17,7 @@
 </h1>
 <div align="left">
     <h2>Dictionary v1.0 - Spring Boot</h2>
-    <form action="/dictionary" method="get">
+    <form action="/getLanguage" method="put">
         Select a Language:&nbsp;
         <select name="languageName">
             <option value="">Choose Language</option>
@@ -25,12 +25,12 @@
                 <option value="${language.languageName}">${language.languageName}</option>
             </c:forEach>
         </select>
-        <% request.getParameter("language") ;%>
+        <!--% request.getParameter("language") ;%-->
         &nbsp;&nbsp;&nbsp;
         <input type="submit" value="Submit" />
     </form>
 
-    <form action="changeLanguage" method="post" modelAttribute="language"></form>
+    <!--form action="/getLanguage" method="post" modelAttribute="language"></form-->
 
     <form>
         <table width="75%">
@@ -49,7 +49,7 @@
             <tr>
                 <td width="8%">Language Code:</td>
                 <td width="52%">
-                    <input type="text" name="name" value="${selectedLanguage.languageId}" />
+                    <input type="text" name="foreignLanguageCode" value="${selectedLanguage.foreignLanguage}" readonly />
                 </td>
             </tr>
         </table>
@@ -61,7 +61,7 @@
             <tr>
                 <td width="8%">Mother Language Code:</td>
                 <td width="52%">
-                    <input type="text" name="name" value="${selectedLanguage.motherLanguage}" />
+                    <input type="text" name="motherLanguageCode" value="${selectedLanguage.motherLanguage}" readonly/>
                 </td>
             </tr>
         </table>
@@ -72,7 +72,7 @@
             <tr>
                 <td width="8%">Message:</td>
                 <td width="52%">
-                    <input type="text" name="name"/>
+                    <input type="text" name="message" value="${selectedLanguage.motherLanguage}" readonly/>
                 </td>
             </tr>
         </table>
@@ -98,8 +98,8 @@
     <br/><br/>
 
 
-    <form action="/TBD" method="get">
-        <button type="button">Read Entire Dictionary</button>
+    <form action="readEntireDictionary" method="get">
+        <button type="button" name="readEntireDictionary">Read Entire Dictionary</button>
     </form>
 
     <br/><br/>

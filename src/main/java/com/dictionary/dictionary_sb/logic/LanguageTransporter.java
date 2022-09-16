@@ -1,4 +1,4 @@
-package com.dictionary.dictionary_sb.controller;
+package com.dictionary.dictionary_sb.logic;
 
 import com.dictionary.dictionary_sb.commands.LanguageCommand;
 

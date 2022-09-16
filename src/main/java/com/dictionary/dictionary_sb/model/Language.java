@@ -19,7 +19,6 @@ public class Language {
     @Column(name="motherLanguage", nullable = false)
     private String motherLanguage;
 
-    private static Long selectedLanguageId;
 
     public Long getLanguageId() {
         return languageId;
@@ -51,12 +50,5 @@ public class Language {
 
     public void setLanguageName(String languageName) {
         this.languageName = languageName;
-    }
-
-    public  Long getSelectedLanguageId() {
-        return selectedLanguageId;
-    }
-    public  void setSelectedLanguageId(Long selectedLanguageId) {
-        selectedLanguageId = selectedLanguageId;
     }
 }

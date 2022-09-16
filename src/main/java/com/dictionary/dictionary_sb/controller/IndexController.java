@@ -2,6 +2,7 @@ package com.dictionary.dictionary_sb.controller;
 
 
 import com.dictionary.dictionary_sb.commands.LanguageCommand;
+import com.dictionary.dictionary_sb.logic.LanguageTransporter;
 import com.dictionary.dictionary_sb.services.LanguageService;
 import com.dictionary.dictionary_sb.services.WordService;
 import org.springframework.stereotype.Controller;
@@ -26,12 +27,18 @@ public class IndexController {
         this.languageService = languageService;
     }
 
-    @GetMapping
+    @GetMapping("/getLanguage")
     public String getDictionaryById(@RequestParam String languageName, Model model) {
 
         LanguageCommand languageCommand = languageService.findLanguageByLanguageName(languageName);
+
         System.out.println("$$$$$$$$$$$$$$$$$ languageName = " + languageName);
+
         model.addAttribute("selectedLanguage", languageService.findLanguageByLanguageName(languageName));
+        model.addAttribute("foreignLanguageCode", languageService.findLanguageByLanguageName(languageName));
+        model.addAttribute("motherLanguageCode", languageService.findLanguageByLanguageName(languageName));
+        model.addAttribute("messaage", "Selected language :" );
+
         LanguageTransporter.setSelectedLanguage(languageCommand);
 
         return "index";
